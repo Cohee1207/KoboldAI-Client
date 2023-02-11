@@ -7535,7 +7535,7 @@ class StoryChunkSchema(StoryNumsChunkSchema, KoboldSchema):
 class StorySchema(KoboldSchema):
     results: List[StoryChunkSchema] = fields.List(fields.Nested(StoryChunkSchema), required=True, metadata={"description": "Array of story actions. The array is sorted such that actions closer to the end of this array are closer to the end of the story."})
 
-class BasicBooleanSchema(KoboldSchema):
+class BasicBooleanResultSchema(KoboldSchema):
     result: bool = fields.Boolean(required=True)
 
 class StoryNumsSchema(KoboldSchema):
@@ -8222,7 +8222,7 @@ def get_story_nums_num(num: int):
           description: Successful request
           content:
             application/json:
-              schema: BasicBooleanSchema
+              schema: BasicBooleanResultSchema
     """
     if num == 0:
         return {"result": vars.gamestarted}
@@ -8620,7 +8620,7 @@ def get_world_info_uids_uid(uid: int):
           description: Successful request
           content:
             application/json:
-              schema: BasicBooleanSchema
+              schema: BasicBooleanResultSchema
     """
     return {"result": uid in vars.worldinfo_u and vars.worldinfo_u[uid]["init"]}
 
@@ -8753,7 +8753,7 @@ def get_world_info_folders_none_uids_uid(uid: int):
           description: Successful request
           content:
             application/json:
-              schema: BasicBooleanSchema
+              schema: BasicBooleanResultSchema
     """
     return {"result": uid in vars.worldinfo_u and vars.worldinfo_u[uid]["folder"] is None and vars.worldinfo_u[uid]["init"]}
 
@@ -8890,7 +8890,7 @@ def get_world_info_folders_folder_uid_uids_entry_uid(folder_uid: int, entry_uid:
           description: Successful request
           content:
             application/json:
-              schema: BasicBooleanSchema
+              schema: BasicBooleanResultSchema
     """
     return {"result": entry_uid in vars.worldinfo_u and vars.worldinfo_u[entry_uid]["folder"] == folder_uid and vars.worldinfo_u[entry_uid]["init"]}
 
